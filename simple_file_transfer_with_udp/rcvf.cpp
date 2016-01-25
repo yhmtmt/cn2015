@@ -21,7 +21,7 @@ struct packet
 int main(int argc, char ** argv)
 {
 	if(argc != 3){
-		printf("Usage: sndf <port number> <packet size>\n");
+		printf("Usage: rcvf <port number> <packet size>\n");
 		return 0;
 	}
 
