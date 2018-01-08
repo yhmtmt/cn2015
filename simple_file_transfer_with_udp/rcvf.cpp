@@ -8,7 +8,7 @@
 //   1. Recieve the first packet includes, file name, packet size, number of packets
 //	 2. Recieve data packets  
 // * The first packet = | number of packets |		file name	    |
-// * The data packet =  | data size         |		data	        |
+// * The data packet =  | index   | data size  | data |
 // * Note that the packet size should be the same as that specified in the client.
 
 

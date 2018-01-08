@@ -18,10 +18,6 @@ int main(int argc, char ** argv)
 		return 0;
 	}
 
-	// Initializing WinSock
-	WSAData wd;
-	WSAStartup(MAKEWORD(2,0), &wd);
-
 	// Translating port number
 	int nport = atoi(argv[3]);
 
@@ -37,6 +33,10 @@ int main(int argc, char ** argv)
 		printf("Packet size must be larger enough to send file name %s.", argv[1]);
 		return 0;
 	}
+
+	// Initializing WinSock
+	WSAData wd;
+	WSAStartup(MAKEWORD(2,0), &wd);
 
 	// Setting up socket
 	SOCKET s = socket(AF_INET, SOCK_DGRAM, 0);
@@ -67,15 +67,15 @@ int main(int argc, char ** argv)
 
 	// sending all data packets
 	for(int i = 0; i < npkts; i++){
+		Sleep(100);
 		memcpy((void*) buf, (void*) &i, sizeof(int));
-		memcpy((void*) (buf + sizeof(int)), (void*) &szdata, sizeof(int));
 		if(i == npkts - 1){			
 			szdata = szf % (szpkt - sizeof(int) * 2);
 		}
+		memcpy((void*) (buf + sizeof(int)), (void*) &szdata, sizeof(int));
 		fread((void*)(buf + sizeof(int) * 2), sizeof(char), (size_t) szdata, pf);
 		sendto(s, buf, szpkt, 0, (sockaddr*) &addr, sizeof(addr));
 		printf("%dth packet sent.\n", i);	
-		Sleep(100);
 	}
 
 	free(buf);
